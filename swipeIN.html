@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="http://fonts.googleapis.com/css?family=Righteous" rel="stylesheet" type="text/css">
+<link href="css/indexcss.css" rel="stylesheet" type="text/css">
+<link rel="icon" type="image/png" href="favicon.ico" />
+<title>MaSCA SWIPE</title>
+</head>
+<body onLoad="setFocus()">
+<header class="header">
+<img src="logo.png" alt="MaSCA" style="width:200px;height:200px;">
+</header>
+
+<section class="box">
+<div id="logform">
+<h2>Welcome to the </br>MATH SOLUTION CENTER</h2>
+<a href="?login">Log In</a>
+<form method="post" name="inputForm" onsubmit="return validateForm()"  onload="setFocus()" >
+    <p>Swipe Your Student ID Card</p>
+    <div id="alert"></div>
+    <input type="text" id="studentID" name="studentID" onfocus="javascript: this.value = ' '" autofocus required />    
+	<input type="hidden" name="action" value="swipein"/>
+</form>
+<p><?php if( isset($feedback) ): ?>
+                <?php echo $feedback; ?>
+                <?php endif; ?>
+				</p>
+</div>
+</section>
+</body>
+<script>
+    function setFocus()
+    {
+        document.getElementById("studentID").focus();
+    }
+    
+    function validateForm()
+	{
+        var x = document.forms["inputForm"]["studentID"].value;
+        var error;
+        if (x == null || x == " "){
+         document.getElementById("alert").innerHTML = "Invalid Read please try again";        
+        document.getElementById("studentID").focus();
+            
+            
+        return false;
+        
+        }
+        var validator = new RegExp(/(APIN)\w+%\w+\?|(BOI)\w+%\w+\?/g);
+        var isValueValid = validator.test(x);
+        
+        if (!(isValueValid)){
+            var error = "Invalid card please use a CWI student ID card";
+            document.getElementById("alert").innerHTML = error; 
+            document.getElementById("studentID").value = '';
+            document.getElementById("studentID").focus();
+            
+            return false;
+        } 
+    }
+</script>
+</html>
